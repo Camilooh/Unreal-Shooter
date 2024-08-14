@@ -26,5 +26,11 @@ protected:
     TSubclassOf<UUserWidget> HUDWidgetClass;
 
     // Instancia del Widget
+    UPROPERTY()
     UUserWidget* HUDWidget;
+
+private:
+    // Funciones para mostrar las pantallas de ganar o perder
+    void ShowWinScreen();
+    void ShowLoseScreen();
 };

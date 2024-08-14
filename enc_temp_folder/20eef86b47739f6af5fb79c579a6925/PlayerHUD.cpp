@@ -10,7 +10,7 @@
 void APlayerHUD::BeginPlay()
 {
     Super::BeginPlay();
-   
+
     // Verifica si se ha asignado una clase de Widget Blueprint
     if (HUDWidgetClass)
     {
@@ -22,7 +22,6 @@ void APlayerHUD::BeginPlay()
         {
             // Añade el widget al viewport
             HUDWidget->AddToViewport();
-            
         }
     }
 
@@ -52,7 +51,7 @@ void APlayerHUD::ShowWinScreen()
     {
         if (GEngine)
         {
-            GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Se agrego el widget"));
+            GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("no HUD Widget"));
         }
     }
 }
