@@ -8,7 +8,6 @@
 #include "PlayerHUD.generated.h"
 
 
-
 /**
  * 
  */
@@ -20,14 +19,6 @@ class MYSHOOTER_API APlayerHUD : public AHUD
 public:
     // Override de la función BeginPlay para inicializar el HUD
     virtual void BeginPlay() override;
-    //override de Tick
-    virtual void Tick(float DeltaTime) override;
-
-    // Función para actualizar el número de enemigos en el HUD
-    void UpdateEnemyCount();
-
-    // Función para actualizar el texto de la munición en el HUD
-    void UpdateAmmoCount();
 
 protected:
     // Clase del Widget Blueprint que se usará para el HUD

@@ -5,9 +5,6 @@
 #include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/PlayerController.h"
-#include "Enemy/EnemyActor.h"
-#include "Components/TextBlock.h" 
-#include "MyCharacter.h"
 
 
 void APlayerHUD::BeginPlay()
@@ -26,10 +23,6 @@ void APlayerHUD::BeginPlay()
             // Añade el widget al viewport
             HUDWidget->AddToViewport();
             
-
-            // Actualiza el texto con la cantidad de enemigos inicial
-            UpdateEnemyCount();
-            UpdateAmmoCount();
         }
     }
 
@@ -40,55 +33,6 @@ void APlayerHUD::BeginPlay()
         PlayerController->InputComponent->BindAction("ShowLoseScreen", IE_Pressed, this, &APlayerHUD::ShowLoseScreen);
     }
 
-}
-
-void APlayerHUD::Tick(float DeltaTime)
-{
-    Super::Tick(DeltaTime);
-
-    // Llama a UpdateAmmoCount en cada frame
-    UpdateAmmoCount();
-    UpdateEnemyCount();
-}
-void APlayerHUD::UpdateAmmoCount()
-{
-    // Obtén una referencia al personaje del jugador
-    AMyCharacter* MyCharacter = Cast<AMyCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
-
-    if (MyCharacter)
-    {
-        // Obtén el valor de la munición del personaje
-        int32 AmmoCount = MyCharacter->GetAmmo(); // Asumiendo que tienes una función GetAmmo()
-
-        // Encuentra el texto en el HUD y actualízalo
-        if (HUDWidget)
-        {
-            UTextBlock* AmmoCountText = Cast<UTextBlock>(HUDWidget->GetWidgetFromName(TEXT("AmmoCountText")));
-            if (AmmoCountText)
-            {
-                AmmoCountText->SetText(FText::AsNumber(AmmoCount));
-            }
-        }
-    }
-}
-void APlayerHUD::UpdateEnemyCount()
-{
-    // Obtén todos los actores de tipo EnemyActor en el nivel
-    TArray<AActor*> EnemyActors;
-    UGameplayStatics::GetAllActorsOfClass(GetWorld(), AEnemyActor::StaticClass(), EnemyActors);
-
-    // Cuenta la cantidad de enemigos
-    int32 EnemyCount = EnemyActors.Num();
-
-    // Encuentra el texto en el HUD y actualízalo
-    if (HUDWidget)
-    {
-        UTextBlock* EnemyCountText = Cast<UTextBlock>(HUDWidget->GetWidgetFromName(TEXT("EnemiesCountText")));
-        if (EnemyCountText)
-        {
-            EnemyCountText->SetText(FText::AsNumber(EnemyCount));
-        }
-    }
 }
 
 void APlayerHUD::ShowWinScreen()

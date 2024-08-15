@@ -35,16 +35,7 @@ public:
 
 	void Fire();
 
-	// Función para obtener la cantidad de munición
-	UFUNCTION(BlueprintCallable, Category = "Combat")
-	int32 GetAmmo() const;
-
-	void AddAmmo(int32 Amount);
-
 private:
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
-	int32 Ammo;
 	// Componente de la cámara
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;

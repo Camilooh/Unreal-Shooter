@@ -12,8 +12,6 @@
 // Sets default values
 AMyCharacter::AMyCharacter()
 {
-
-	Ammo = 10;
 	// Configura la tasa de giro y mirada
 	TurnRate = 20.f;
 	LookUpRate = 20.f;
@@ -31,16 +29,6 @@ AMyCharacter::AMyCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
 
-}
-int32 AMyCharacter::GetAmmo() const
-{
-	return Ammo;
-}
-
-void AMyCharacter::AddAmmo(int32 Amount)
-{
-	Ammo += Amount;
-	// Aquí puedes añadir lógica adicional si es necesario, como actualizaciones en el HUD
 }
 // Llamado cuando el juego comienza o cuando se genera el personaje
 void AMyCharacter::BeginPlay()
@@ -115,40 +103,26 @@ void AMyCharacter::LookUpAtRate(float Rate)
 
 void AMyCharacter::Fire()
 {
-	if (Ammo > 0 && ProjectileClass)
+	if (ProjectileClass)
 	{
-		// Disparar el proyectil si hay munición disponible
-		APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
-		if (PlayerController)
+		// Obtener la ubicación y rotación del personaje
+		FVector MuzzleLocation = GetActorLocation() + GetActorForwardVector() * 100.0f; // Desplazar la ubicación del proyectil hacia adelante
+		FRotator MuzzleRotation = GetActorRotation(); // Rotación del personaje
+
+		// Parámetros de spawn
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.Owner = this;
+		SpawnParams.Instigator = GetInstigator();
+
+		// Spawnear el proyectil en la ubicación del personaje
+		AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, MuzzleLocation, MuzzleRotation, SpawnParams);
+		if (Projectile)
 		{
-			int32 ViewportSizeX, ViewportSizeY;
-			PlayerController->GetViewportSize(ViewportSizeX, ViewportSizeY);
-
-			FVector CrosshairLocation;
-			FVector CrosshairDirection;
-			if (PlayerController->DeprojectScreenPositionToWorld(ViewportSizeX / 2.0f, ViewportSizeY / 2.0f, CrosshairLocation, CrosshairDirection))
-			{
-				FVector MuzzleLocation = GetActorLocation() + GetActorForwardVector() * 100.0f;
-				FRotator MuzzleRotation = CrosshairDirection.Rotation();
-
-				FActorSpawnParameters SpawnParams;
-				SpawnParams.Owner = this;
-				SpawnParams.Instigator = GetInstigator();
-
-				AProjectile* Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileClass, MuzzleLocation, MuzzleRotation, SpawnParams);
-				if (Projectile)
-				{
-					Projectile->FireInDirection(CrosshairDirection);
-
-					// Reducir la munición en 1 después de disparar
-					Ammo--;
-				}
-			}
+			// Establecer la dirección inicial del proyectil
+			FVector LaunchDirection = MuzzleRotation.Vector();
+			Projectile->FireInDirection(LaunchDirection);
 		}
 	}
 }
-
-
-
 
 
