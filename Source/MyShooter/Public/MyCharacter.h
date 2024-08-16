@@ -40,7 +40,17 @@ public:
 	int32 GetAmmo() const;
 
 	void AddAmmo(int32 Amount);
+	void AddHealth(int32 Amount);
 
+	UFUNCTION(BlueprintCallable, Category = "Health")
+	float GetHealth() const;
+
+	// Salud máxima del jugador
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health", meta = (AllowPrivateAccess = "true"))
+	float MaxHealth;
+
+	UFUNCTION(BlueprintCallable, Category = "Health")
+	void TakeDamage(float DamageAmount);
 private:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Combat", meta = (AllowPrivateAccess = "true"))
@@ -61,6 +71,12 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Projectile")
 	TSubclassOf<class AProjectile> ProjectileClass;
+
+	// Variable de salud del jugador
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Health", meta = (AllowPrivateAccess = "true"))
+	float Health;
+
+	
 
 
 };

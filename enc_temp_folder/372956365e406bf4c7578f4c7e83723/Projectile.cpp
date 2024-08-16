@@ -2,7 +2,6 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/SphereComponent.h"
 #include "MyCharacter.h"
-#include "Enemy/EnemyActor.h"
 
 AProjectile::AProjectile()
 {
@@ -69,13 +68,7 @@ void AProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimi
         }
         else
         {
-            // Verifica si el otro actor es de la clase EnemyActor
-            AEnemyActor* Enemy = Cast<AEnemyActor>(OtherActor);
-            if (Enemy)
-            {
-                // Si es un EnemyActor, destrúyelo
-                Enemy->Destroy();
-            }
+            OtherActor->Destroy();
         }
 
         // Destruye el proyectil después de aplicar el daño o si choca con cualquier otro objeto

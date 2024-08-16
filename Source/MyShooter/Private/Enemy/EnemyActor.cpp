@@ -58,6 +58,7 @@ void AEnemyActor::BeginPlay()
 
     // Establece un temporizador para cambiar la dirección aleatoria
     GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &AEnemyActor::MoveRandomly, ChangeDirectionInterval, true);
+    GetWorld()->GetTimerManager().SetTimer(FireTimerHandle, this, &AEnemyActor::FireAtPlayer, 2.0f, true);
 }
 
 // Called every frame

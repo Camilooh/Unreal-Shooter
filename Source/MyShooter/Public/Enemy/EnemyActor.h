@@ -46,6 +46,7 @@ private:
     FVector TargetLocation;
 
     FTimerHandle TimerHandle;
+    FTimerHandle FireTimerHandle;
 
     UFUNCTION()
     void OnDetectionSphereOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);

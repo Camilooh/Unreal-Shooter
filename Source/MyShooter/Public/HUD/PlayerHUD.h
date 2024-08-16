@@ -29,6 +29,10 @@ public:
     // Función para actualizar el texto de la munición en el HUD
     void UpdateAmmoCount();
 
+    // Función para actualizar la barra de salud en el HUD
+    void UpdateHealthBar();
+
+
 protected:
     // Clase del Widget Blueprint que se usará para el HUD
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")

@@ -12,8 +12,13 @@
 // Sets default values
 AMyCharacter::AMyCharacter()
 {
+	//Health 
+	MaxHealth = 100.0f;
+	Health = MaxHealth;
 
+	//Ammo
 	Ammo = 10;
+
 	// Configura la tasa de giro y mirada
 	TurnRate = 20.f;
 	LookUpRate = 20.f;
@@ -31,6 +36,24 @@ AMyCharacter::AMyCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	FollowCamera->bUsePawnControlRotation = false;
 
+}
+
+void AMyCharacter::TakeDamage(float DamageAmount)
+{
+	Health -= DamageAmount;
+	if (Health <= 0)
+	{
+		// Aquí puedes manejar la muerte del jugador
+	}
+}
+float AMyCharacter::GetHealth() const
+{
+	return Health;
+}
+void AMyCharacter::AddHealth(int32 Amount)
+{
+
+	Health += Amount;
 }
 int32 AMyCharacter::GetAmmo() const
 {

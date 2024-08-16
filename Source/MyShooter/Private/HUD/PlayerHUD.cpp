@@ -7,6 +7,7 @@
 #include "GameFramework/PlayerController.h"
 #include "Enemy/EnemyActor.h"
 #include "Components/TextBlock.h" 
+#include "Components/ProgressBar.h"
 #include "MyCharacter.h"
 
 
@@ -30,6 +31,7 @@ void APlayerHUD::BeginPlay()
             // Actualiza el texto con la cantidad de enemigos inicial
             UpdateEnemyCount();
             UpdateAmmoCount();
+            UpdateHealthBar();
         }
     }
 
@@ -46,9 +48,10 @@ void APlayerHUD::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
 
-    // Llama a UpdateAmmoCount en cada frame
+   
     UpdateAmmoCount();
     UpdateEnemyCount();
+    UpdateHealthBar();
 }
 void APlayerHUD::UpdateAmmoCount()
 {
@@ -90,7 +93,27 @@ void APlayerHUD::UpdateEnemyCount()
         }
     }
 }
+void APlayerHUD::UpdateHealthBar()
+{
+    // Obtén una referencia al personaje del jugador
+    AMyCharacter* MyCharacter = Cast<AMyCharacter>(UGameplayStatics::GetPlayerCharacter(this, 0));
 
+    if (MyCharacter)
+    {
+        // Obtén el porcentaje de salud del personaje
+        float HealthPercent = MyCharacter->GetHealth() / MyCharacter->MaxHealth;
+
+        // Encuentra la barra de salud en el HUD y actualízala
+        if (HUDWidget)
+        {
+            UProgressBar* HealthProgressBar = Cast<UProgressBar>(HUDWidget->GetWidgetFromName(TEXT("HealthProgressBar")));
+            if (HealthProgressBar)
+            {
+                HealthProgressBar->SetPercent(HealthPercent);
+            }
+        }
+    }
+}
 void APlayerHUD::ShowWinScreen()
 {
     if (HUDWidget)
