@@ -99,12 +99,6 @@ void APlayerHUD::UpdateEnemyCount()
             EnemyCountText->SetText(FText::AsNumber(EnemyCount));
         }
     }
-
-    if(EnemyCount <= 0)
-    {
-        ShowWinScreen();
-    
-    }
 }
 void APlayerHUD::UpdateHealthBar()
 {
@@ -148,11 +142,11 @@ void APlayerHUD::ShowWinScreen()
             }
         }
         // Buscar y configurar el botón del menú principal en el Win Screen
-        UButton* MainMenuButton = Cast<UButton>(HUDWidget->GetWidgetFromName(TEXT("MainMenuButton1")));
+        /*UButton* MainMenuButton = Cast<UButton>(HUDWidget->GetWidgetFromName(TEXT("MainMenuButton1")));
         if (MainMenuButton)
         {
             MainMenuButton->OnClicked.AddDynamic(this, &APlayerHUD::OnMainMenuButtonClicked);
-        }
+        }*/
 
 
     }

@@ -31,9 +31,13 @@ public:
 
     // Función para actualizar la barra de salud en el HUD
     void UpdateHealthBar();
+    // Funciones para mostrar las pantallas de ganar o perder
+    void ShowWinScreen();
+    void ShowLoseScreen();
 
-
+   
 protected:
+
     // Clase del Widget Blueprint que se usará para el HUD
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "HUD")
     TSubclassOf<UUserWidget> HUDWidgetClass;
@@ -42,8 +46,8 @@ protected:
     UPROPERTY()
     UUserWidget* HUDWidget;
 
-private:
-    // Funciones para mostrar las pantallas de ganar o perder
-    void ShowWinScreen();
-    void ShowLoseScreen();
+    // Función que se llamará cuando se haga clic en el botón del menú principal
+    UFUNCTION()
+    void OnMainMenuButtonClicked();
+   
 };

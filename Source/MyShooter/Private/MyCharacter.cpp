@@ -3,6 +3,7 @@
 
 #include "MyCharacter.h"
 #include "Projectile.h"
+#include "HUD/PlayerHUD.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/PlayerController.h"
@@ -43,7 +44,17 @@ void AMyCharacter::TakeDamage(float DamageAmount)
 	Health -= DamageAmount;
 	if (Health <= 0)
 	{
-		// Aquí puedes manejar la muerte del jugador
+		// Obtener el PlayerController
+		APlayerController* PlayerController = GetWorld()->GetFirstPlayerController();
+		if (PlayerController)
+		{
+			// Obtener el HUD y llamar a ShowLoseScreen
+			APlayerHUD* PlayerHUD = Cast<APlayerHUD>(PlayerController->GetHUD());
+			if (PlayerHUD)
+			{
+				PlayerHUD->ShowLoseScreen();
+			}
+		}
 	}
 }
 float AMyCharacter::GetHealth() const
@@ -76,6 +87,7 @@ void AMyCharacter::BeginPlay()
 void AMyCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
 }
 
 // Configurar la entrada del jugador

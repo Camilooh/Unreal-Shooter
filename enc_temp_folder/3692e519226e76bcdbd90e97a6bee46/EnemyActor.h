@@ -32,7 +32,7 @@ public:
     TSubclassOf<class AProjectile> ProjectileClass;
 
     UPROPERTY(EditAnywhere, Category = "Movement")
-    float MovementSpeed = 100.0f; // Velocidad de movimiento
+    float MovementSpeed = 600.0f; // Velocidad de movimiento
 
     UPROPERTY(EditAnywhere, Category = "Movement")
     float ChangeDirectionInterval = 2.0f; // Intervalo para cambiar de dirección
