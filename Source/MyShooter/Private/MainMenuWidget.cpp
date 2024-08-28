@@ -20,7 +20,7 @@ void UMainMenuWidget::NativeConstruct()
 
 void UMainMenuWidget::OnStartButtonClicked()
 {
-    UGameplayStatics::OpenLevel(this, FName("YourGameLevelName"));
+    UGameplayStatics::OpenLevel(this, FName("MyMap"));
 }
 
 void UMainMenuWidget::OnQuitButtonClicked()

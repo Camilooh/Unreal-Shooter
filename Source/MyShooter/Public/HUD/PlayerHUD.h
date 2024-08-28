@@ -25,7 +25,7 @@ public:
 
     // Función para actualizar el número de enemigos en el HUD
     void UpdateEnemyCount();
-
+    void ExecuteEnemyFunc();
     // Función para actualizar el texto de la munición en el HUD
     void UpdateAmmoCount();
 

@@ -30,7 +30,7 @@ void APlayerHUD::BeginPlay()
             
 
             // Actualiza el texto con la cantidad de enemigos inicial
-            UpdateEnemyCount();
+            ExecuteEnemyFunc();
             UpdateAmmoCount();
             UpdateHealthBar();
             // Busca el botón del menú principal en el widget
@@ -81,8 +81,16 @@ void APlayerHUD::UpdateAmmoCount()
         }
     }
 }
+void APlayerHUD::ExecuteEnemyFunc() 
+{
+    FTimerHandle TimerHandle;
+
+    // Configura el temporizador para ejecutar la función después de 2 segundos
+    GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &APlayerHUD::UpdateEnemyCount, 2.0f, false);
+}
 void APlayerHUD::UpdateEnemyCount()
 {
+    // AGREGAR UN PEQUEÑO DELAY ANTES DE CARGAR ESTO 
     // Obtén todos los actores de tipo EnemyActor en el nivel
     TArray<AActor*> EnemyActors;
     UGameplayStatics::GetAllActorsOfClass(GetWorld(), AEnemyActor::StaticClass(), EnemyActors);

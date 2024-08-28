@@ -69,37 +69,22 @@ void ASpeedReductionZone::OnPlayerExitZone(UPrimitiveComponent* OverlappedComp, 
         AMyCharacter* Character = Cast<AMyCharacter>(OtherActor);
         if (Character)
         {
-            // Usa un temporizador para restaurar la velocidad original después de 2 segundos
-            FTimerHandle TimerHandle;
-            GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this, Character]()
-                {
-                    if (Character)
-                    {
-                        UCharacterMovementComponent* MovementComponent = Character->GetCharacterMovement();
-                        if (MovementComponent)
-                        {
-                            MovementComponent->MaxWalkSpeed = OriginalSpeed; // Restaurar la velocidad original
-
-                            // Mensaje de depuración en el log
-                            UE_LOG(LogTemp, Warning, TEXT("Player exited speed reduction zone. Speed restored to %f"), MovementComponent->MaxWalkSpeed);
-
-                            // Mensaje de depuración en pantalla
-                            if (GEngine)
-                            {
-                                GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Exited Speed Reduction Zone"));
-                            }
-
-                            bIsPlayerInside = false; // Marcar como fuera de la zona
-                        }
-                    }
-                }, 2.0f, false);
-
-            // Mensaje de depuración para indicar que el temporizador ha comenzado
-            if (GEngine)
+            UCharacterMovementComponent* MovementComponent = Character->GetCharacterMovement();
+            if (MovementComponent)
             {
-                GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, TEXT("Player will restore speed in 2 seconds..."));
+                MovementComponent->MaxWalkSpeed = OriginalSpeed; // Restaurar la velocidad original
+
+                // Mensaje de depuración en el log
+                UE_LOG(LogTemp, Warning, TEXT("Player exited speed reduction zone. Speed restored to %f"), MovementComponent->MaxWalkSpeed);
+
+                // Mensaje de depuración en pantalla
+                if (GEngine)
+                {
+                    GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Exited Speed Reduction Zone"));
+                }
+
+                bIsPlayerInside = false; // Marcar como fuera de la zona
             }
         }
     }
 }
-
